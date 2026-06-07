@@ -1,39 +1,50 @@
-# 🏦 LoanSight AI — Bank Loan Default Analytics
+# 🏦 LoanSight AI — Bank Loan Default Risk Intelligence Platform
 
-> An end-to-end machine learning platform for predicting loan default risk, powered by XGBoost, SQL analytics, and an interactive Streamlit dashboard.
+![Python](https://img.shields.io/badge/Python-3.12-blue?style=flat-square&logo=python)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.x-red?style=flat-square&logo=streamlit)
+![XGBoost](https://img.shields.io/badge/XGBoost-Best%20Model-green?style=flat-square)
+![SQLite](https://img.shields.io/badge/SQLite-Database-lightgrey?style=flat-square&logo=sqlite)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
 
-🔗 **Live App:** [loansight-amdox.streamlit.app](https://loansight-amdox.streamlit.app)  
-📁 **Dataset:** [Home Credit Default Risk — Kaggle](https://www.kaggle.com/c/home-credit-default-risk)
-
----
-
-## 📌 Project Overview
-
-LoanSight AI analyzes **307,511 real loan applications** from Home Credit to predict which applicants are likely to default. Built as part of the Amdox Technologies Data Science internship (Month 2), this project demonstrates a complete ML pipeline from raw data to a deployed web application.
+An end-to-end machine learning platform built on the **Home Credit Default Risk** dataset (307,511 loan applications). LoanSight AI predicts loan default risk using XGBoost, performs SQL-powered portfolio analytics, and provides an interactive risk assessment tool for banking professionals.
 
 ---
 
-## 🎯 Key Results
+## 📸 App Screenshots
 
-| Model | Accuracy | ROC-AUC |
-|-------|----------|---------|
-| **XGBoost** ✅ | **91.50%** | **0.7222** |
-| Random Forest | 91.14% | 0.6678 |
-| Logistic Regression | 79.72% | 0.6399 |
-| Decision Tree | 76.02% | 0.6396 |
+| Home | Overview |
+|------|----------|
+| ![Home](screenshots/home.png) | ![Overview](screenshots/overview.png) |
+
+| Risk Analysis | Loan Predictor |
+|---------------|----------------|
+| ![Risk Analysis](screenshots/risk_analysis.png) | ![Loan Predictor](screenshots/loan_predictor.png) |
+
+| SQL Explorer | Model Report |
+|--------------|--------------|
+| ![SQL Explorer](screenshots/sql_explorer.png) | ![Model Report](screenshots/model_report.png) |
 
 ---
 
-## 🖥️ App Pages
+## 🚀 Features
 
-| Page | Description |
-|------|-------------|
-| 🏠 Home | Project overview and key metrics |
-| 📊 Overview | Portfolio summary and distributions |
-| ⚠️ Risk Analysis | Default patterns by age, gender, credit |
-| 🔮 Loan Predictor | Real-time default risk prediction |
-| 🗄️ SQL Explorer | Live SQL queries on loan database |
-| 📈 Model Report | Full evaluation — ROC, confusion matrix, feature importance |
+- **🏠 Home** — Project overview, KPI metrics, tech stack, and dataset info
+- **📊 Data Overview & EDA** — Target distribution, credit/income/age analysis, default rates by gender, education, and contract type
+- **⚠️ Risk Analysis** — Interactive filters, risk level breakdown, default heatmap (income × education), credit-to-income scatter
+- **🔮 Loan Default Predictor** — Real-time default probability prediction with gauge chart, risk classification, and recommendation
+- **🗄️ SQL Explorer** — Run live SQL queries on the loan portfolio with auto-chart generation
+- **📝 Model Report** — Model comparison table, accuracy/ROC-AUC charts, feature importance, radar chart, and hyperparameter details
+
+---
+
+## 📊 Model Performance
+
+| Model | Accuracy | ROC-AUC | Status |
+|-------|----------|---------|--------|
+| **XGBoost** | **91.50%** | **0.7222** | 🥇 Best |
+| Random Forest | 91.14% | 0.6678 | 2nd |
+| Logistic Regression | 79.72% | 0.6399 | 3rd |
+| Decision Tree | 76.02% | 0.6396 | 4th |
 
 ---
 
@@ -41,69 +52,122 @@ LoanSight AI analyzes **307,511 real loan applications** from Home Credit to pre
 
 ```
 BankLoan/
+├── app/
+│   ├── .streamlit/
+│   └── app.py                   # Main Streamlit app (single file)
+├── assets/                      # Logo / icons
 ├── data/
-│   ├── raw/                  # Original Kaggle CSVs (gitignored)
-│   └── processed/            # Cleaned data, sample CSV, SQLite DB
+│   ├── processed/
+│   │   ├── sample_data.csv      # Processed dataset used by app
+│   │   └── engineered_data.csv  # Feature engineered dataset
+│   └── raw/                     # Raw Kaggle CSVs (not pushed to GitHub)
+├── images/                      # EDA & model plots from notebooks
+├── models/
+│   ├── best_model.pkl           # Trained XGBoost model
+│   ├── feature_names.pkl        # Feature names list
+│   └── scaler.pkl               # StandardScaler
 ├── notebooks/
 │   ├── 01_EDA.ipynb
 │   ├── 02_Feature_Engineering.ipynb
 │   ├── 03_Model_Training.ipynb
 │   ├── 04_SQL_Analytics.ipynb
 │   └── 05_Model_Evaluation.ipynb
-├── models/
-│   ├── best_model.pkl        # Trained XGBoost model
-│   ├── scaler.pkl
-│   └── feature_names.pkl
-├── app/
-│   ├── main.py               # Streamlit home page
-│   └── pages/                # Multi-page app
-├── images/                   # Saved EDA and evaluation charts
-├── screenshots/              # App screenshots
-├── requirements.txt
-└── README.md
+├── screenshots/                 # App screenshots
+├── .gitignore
+├── README.md
+└── requirements.txt
 ```
 
 ---
 
 ## ⚙️ Tech Stack
 
-| Component | Technology |
-|-----------|------------|
+| Category | Tools |
+|----------|-------|
 | Language | Python 3.12 |
-| ML Models | XGBoost, Random Forest, Logistic Regression, Decision Tree |
-| Imbalance | SMOTE (imbalanced-learn) |
-| Database | SQLite + SQLAlchemy |
 | Dashboard | Streamlit |
-| Charts | Plotly, Seaborn, Matplotlib |
-| Deployment | Streamlit Cloud |
+| ML Models | XGBoost, Random Forest, Logistic Regression, Decision Tree |
+| ML Pipeline | Scikit-learn (Imputer, StandardScaler) |
+| Visualisation | Plotly |
+| Database | SQLite |
+| Data Wrangling | Pandas, NumPy |
 
 ---
 
-## 🚀 Run Locally
+## 🔢 Dataset
 
+- **Source:** [Home Credit Default Risk — Kaggle](https://www.kaggle.com/c/home-credit-default-risk)
+- **Total Records:** 307,511 loan applications
+- **Target:** Binary — `1` = Default, `0` = Repaid
+- **Class Imbalance:** ~8.07% positive class
+- **Features Used:** 10 engineered features (EXT_SOURCE_1/2/3, AMT_CREDIT, AMT_INCOME_TOTAL, AMT_ANNUITY, DAYS_BIRTH, DAYS_EMPLOYED, CREDIT_INCOME_RATIO, ANNUITY_INCOME_RATIO)
+
+---
+
+## 🔍 XGBoost — Top Features
+
+| Feature | Importance |
+|---------|-----------|
+| EXT_SOURCE_3 | 0.280 |
+| EXT_SOURCE_2 | 0.220 |
+| EXT_SOURCE_1 | 0.180 |
+| CREDIT_INCOME_RATIO | 0.100 |
+| AMT_CREDIT | 0.070 |
+
+---
+
+## 🛠️ Installation & Setup
+
+**1. Clone the repository**
 ```bash
 git clone https://github.com/shubhamjais04/BankLoan.git
 cd BankLoan
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-streamlit run app/main.py
 ```
 
-> ⚠️ Raw data files are not included in the repo. Download from [Kaggle](https://www.kaggle.com/c/home-credit-default-risk/data) and place in `data/raw/`.
+**2. Create virtual environment**
+```bash
+py -3.12 -m venv venv
+.\venv\Scripts\activate       # Windows
+source venv/bin/activate      # Mac/Linux
+```
+
+**3. Install dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+**4. Run the app**
+```bash
+cd app
+streamlit run app/app.py
+```
+
+App opens at `http://localhost:8501`
 
 ---
 
-## 📊 Sample Visualizations
+## 📦 Requirements
 
-<!-- Add screenshots here after running the app -->
-| Overview | Risk Analysis | Loan Predictor |
-|----------|---------------|----------------|
-| ![Overview](screenshots/overview.png) | ![Risk](screenshots/risk.png) | ![Predictor](screenshots/predictor.png) |
+```
+streamlit
+pandas
+numpy
+plotly
+scikit-learn
+xgboost
+```
 
 ---
 
 ## 👤 Author
 
-**Shubham Jaiswal**   
-🔗 [GitHub](https://github.com/shubhamjais04) · [LinkedIn](https://linkedin.com/in/shubhamjaiswal04)
+**Shubham Jaiswal**
+- 💼 Data Science & ML Enthusiast
+- 🔗 [LinkedIn](https://linkedin.com/in/shubhjais04)
+- 🐙 [GitHub](https://github.com/shubhamjais04)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
