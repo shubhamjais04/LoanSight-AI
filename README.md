@@ -6,15 +6,13 @@
 ![SQLite](https://img.shields.io/badge/SQLite-Database-lightgrey?style=flat-square&logo=sqlite)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
 
-> **🚀 Live App:** [https://loansight-ai.streamlit.app](https://loansight-ai.streamlit.app)
+---
 
-An end-to-end **SQL-powered analytics and machine learning platform** built on the **Home Credit Default Risk** dataset (307,511 loan applications). LoanSight AI predicts loan default risk using XGBoost, performs SQL-powered portfolio analytics, and provides an interactive risk assessment tool for banking professionals.
+> **🚀 Live App:** [https://loansight-ai.streamlit.app](https://loansight-ai.streamlit.app)
 
 ---
 
-## 🌐 Live Demo
-
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://loansight-ai.streamlit.app)
+An end-to-end **SQL-powered analytics and machine learning platform** built on the **Home Credit Default Risk** dataset (307,511 loan applications). LoanSight AI predicts loan default risk using XGBoost, performs SQL-powered portfolio analytics, and provides an interactive risk assessment tool for banking professionals.
 
 ---
 
