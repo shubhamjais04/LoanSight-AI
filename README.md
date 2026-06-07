@@ -170,11 +170,9 @@ xgboost
 ## 👤 Author
 
 **Shubham Jaiswal**
-- 🎓 B.Sc. Statistics & Computer Science — Mahatma Gandhi Kashi Vidyapith, Varanasi
 - 💼 Data Science & ML Enthusiast
 - 🔗 [LinkedIn](https://linkedin.com/in/shubhjais04)
 - 🐙 [GitHub](https://github.com/shubhamjais04)
-- 📊 [Kaggle](https://kaggle.com/shubhamjaiswal04)
 
 ---
 
