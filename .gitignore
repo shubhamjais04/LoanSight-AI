@@ -3,4 +3,5 @@ __pycache__/
 *.pyc
 .env
 data/raw/
-*.db
+data/processed/engineered_data.csv
+data/processed/bankloan.db
