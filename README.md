@@ -1,4 +1,4 @@
-# 🏦 LoanSight AI — Bank Loan Default Risk Intelligence Platform
+# 🏦 LoanSight AI — Bank Loan Default Risk Analytics Platform
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue?style=flat-square&logo=python)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.x-red?style=flat-square&logo=streamlit)
@@ -6,7 +6,15 @@
 ![SQLite](https://img.shields.io/badge/SQLite-Database-lightgrey?style=flat-square&logo=sqlite)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
 
-An end-to-end machine learning platform built on the **Home Credit Default Risk** dataset (307,511 loan applications). LoanSight AI predicts loan default risk using XGBoost, performs SQL-powered portfolio analytics, and provides an interactive risk assessment tool for banking professionals.
+> **🚀 Live App:** [https://loansight-ai.streamlit.app](https://loansight-ai.streamlit.app)
+
+An end-to-end **SQL-powered analytics and machine learning platform** built on the **Home Credit Default Risk** dataset (307,511 loan applications). LoanSight AI predicts loan default risk using XGBoost, performs SQL-powered portfolio analytics, and provides an interactive risk assessment tool for banking professionals.
+
+---
+
+## 🌐 Live Demo
+
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://loansight-ai.streamlit.app)
 
 ---
 
@@ -54,13 +62,13 @@ An end-to-end machine learning platform built on the **Home Credit Default Risk*
 BankLoan/
 ├── app/
 │   ├── .streamlit/
+│   │   └── config.toml          # Light theme config
 │   └── app.py                   # Main Streamlit app (single file)
 ├── assets/                      # Logo / icons
 ├── data/
 │   ├── processed/
-│   │   ├── sample_data.csv      # Processed dataset used by app
-│   │   └── engineered_data.csv  # Feature engineered dataset
-│   └── raw/                     # Raw Kaggle CSVs (not pushed to GitHub)
+│   │   └── sample_data.csv      # Processed dataset used by app
+│   └── raw/                     # Raw Kaggle CSVs (not pushed — too large)
 ├── images/                      # EDA & model plots from notebooks
 ├── models/
 │   ├── best_model.pkl           # Trained XGBoost model
@@ -77,6 +85,8 @@ BankLoan/
 ├── README.md
 └── requirements.txt
 ```
+
+> **📌 Note on Data Files:** Raw data files (`data/raw/`) and large processed files are excluded from this repository due to GitHub's file size limits. Download the original dataset from [Kaggle — Home Credit Default Risk](https://www.kaggle.com/c/home-credit-default-risk). The app runs on `data/processed/sample_data.csv` which is included.
 
 ---
 
@@ -120,8 +130,8 @@ BankLoan/
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/shubhamjais04/BankLoan.git
-cd BankLoan
+git clone https://github.com/shubhamjais04/LoanSight-AI.git
+cd LoanSight-AI
 ```
 
 **2. Create virtual environment**
@@ -139,7 +149,7 @@ pip install -r requirements.txt
 **4. Run the app**
 ```bash
 cd app
-streamlit run app/app.py
+streamlit run app.py
 ```
 
 App opens at `http://localhost:8501`
@@ -162,9 +172,11 @@ xgboost
 ## 👤 Author
 
 **Shubham Jaiswal**
+- 🎓 B.Sc. Statistics & Computer Science — Mahatma Gandhi Kashi Vidyapith, Varanasi
 - 💼 Data Science & ML Enthusiast
 - 🔗 [LinkedIn](https://linkedin.com/in/shubhjais04)
 - 🐙 [GitHub](https://github.com/shubhamjais04)
+- 📊 [Kaggle](https://kaggle.com/shubhamjaiswal04)
 
 ---
 
