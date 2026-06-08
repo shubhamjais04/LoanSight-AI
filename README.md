@@ -1,5 +1,8 @@
 # 🏦 LoanSight AI — Bank Loan Default Risk Analytics Platform
 
+> **An end-to-end bank loan default risk analytics platform combining SQL-powered portfolio analysis, machine learning-based default prediction, and a 6-page interactive Streamlit dashboard — built on the Home Credit Default Risk dataset.**
+
+---
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![SQL](https://img.shields.io/badge/SQL-SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
@@ -17,34 +20,34 @@
 
 ---
 
+## 📌 Project Overview
+
 An end-to-end **SQL-powered analytics and machine learning platform** built on the **Home Credit Default Risk** dataset (307,511 loan applications). LoanSight AI predicts loan default risk using XGBoost, performs SQL-powered portfolio analytics, and provides an interactive risk assessment tool for banking professionals.
 
 ---
 
-## 📸 App Screenshots
+## 🔢 Dataset
 
-| Home | Overview |
-|------|----------|
-| ![Home](screenshots/home.png) | ![Overview](screenshots/overview.png) |
-
-| Risk Analysis | Loan Predictor |
-|---------------|----------------|
-| ![Risk Analysis](screenshots/risk_analysis.png) | ![Loan Predictor](screenshots/loan_predictor.png) |
-
-| SQL Explorer | Model Report |
-|--------------|--------------|
-| ![SQL Explorer](screenshots/sql_explorer.png) | ![Model Report](screenshots/model_report.png) |
+- **Source:** [Home Credit Default Risk — Kaggle](https://www.kaggle.com/c/home-credit-default-risk)
+- **Total Records:** 307,511 loan applications
+- **Target:** Binary — `1` = Default, `0` = Repaid
+- **Class Imbalance:** ~8.07% positive class
+- **Features Used:** 10 engineered features (EXT_SOURCE_1/2/3, AMT_CREDIT, AMT_INCOME_TOTAL, AMT_ANNUITY, DAYS_BIRTH, DAYS_EMPLOYED, CREDIT_INCOME_RATIO, ANNUITY_INCOME_RATIO)
 
 ---
 
-## 🚀 Features
+## 🗄️ SQL Analytics — Core Component
 
-- **🏠 Home** — Project overview, KPI metrics, tech stack, and dataset info
-- **📊 Data Overview & EDA** — Target distribution, credit/income/age analysis, default rates by gender, education, and contract type
-- **⚠️ Risk Analysis** — Interactive filters, risk level breakdown, default heatmap (income × education), credit-to-income scatter
-- **🔮 Loan Default Predictor** — Real-time default probability prediction with gauge chart, risk classification, and recommendation
-- **🗄️ SQL Explorer** — Run live SQL queries on the loan portfolio with auto-chart generation
-- **📝 Model Report** — Model comparison table, accuracy/ROC-AUC charts, feature importance, radar chart, and hyperparameter details
+A dedicated SQLite database powers the business intelligence layer of LoanSight AI — answering real banking queries through structured SQL:
+
+- 📊 Default rate analysis by income bracket and loan type
+- 💰 Average loan amount segmentation by risk category
+- 📈 Portfolio-level exposure and risk distribution queries
+- 🔍 High-risk applicant identification using multi-condition filters
+- 📋 Repayment behavior patterns across demographic segments
+- 🏦 Credit bureau data correlation with default probability
+
+> All SQL queries are structured, documented, and run directly on the SQLite database inside the notebook — demonstrating real-world database analytics skills.
 
 ---
 
@@ -56,6 +59,21 @@ An end-to-end **SQL-powered analytics and machine learning platform** built on t
 | Random Forest | 91.14% | 0.6678 | 2nd |
 | Logistic Regression | 79.72% | 0.6399 | 3rd |
 | Decision Tree | 76.02% | 0.6396 | 4th |
+
+> XGBoost selected as the final model — best accuracy and ROC-AUC across all models.
+
+---
+
+## ✨ What's Built
+
+- 📥 **Data Pipeline** — Loading and inspecting Home Credit Default Risk dataset (50K sample)
+- 🔍 **Deep EDA** — Target distribution, missing value analysis, feature correlations
+- ⚙️ **Feature Engineering** — Credit risk features, encoding, imputation, StandardScaler
+- 🗄️ **SQL Analytics** — SQLite database with business-grade portfolio queries
+- 🤖 **5 Model Comparison** — Logistic Regression, Decision Tree, Random Forest, XGBoost, LightGBM
+- 📊 **Model Evaluation** — Accuracy, ROC-AUC, Precision, Recall, Confusion Matrix
+- 💾 **Model Persistence** — Saved with Joblib, rule-based fallback predictor
+- 🖥️ **Streamlit Dashboard** — 6-page interactive credit risk intelligence platform
 
 ---
 
@@ -93,39 +111,30 @@ BankLoan/
 
 ---
 
-## ⚙️ Tech Stack
+## 🖥️ Dashboard Pages
 
-| Category | Tools |
-|----------|-------|
-| Language | Python 3.12 |
-| Dashboard | Streamlit |
-| ML Models | XGBoost, Random Forest, Logistic Regression, Decision Tree |
-| ML Pipeline | Scikit-learn (Imputer, StandardScaler) |
-| Visualisation | Plotly |
-| Database | SQLite |
-| Data Wrangling | Pandas, NumPy |
+- **🏠 Home** — Project overview, KPI metrics, tech stack, and dataset info
+- **📊 Data Overview & EDA** — Target distribution, credit/income/age analysis, default rates by gender, education, and contract type
+- **⚠️ Risk Analysis** — Interactive filters, risk level breakdown, default heatmap (income × education), credit-to-income scatter
+- **🔮 Loan Default Predictor** — Real-time default probability prediction with gauge chart, risk classification, and recommendation
+- **🗄️ SQL Explorer** — Run live SQL queries on the loan portfolio with auto-chart generation
+- **📝 Model Report** — Model comparison table, accuracy/ROC-AUC charts, feature importance, radar chart, and hyperparameter details
 
 ---
 
-## 🔢 Dataset
+## 📸 App Screenshots
 
-- **Source:** [Home Credit Default Risk — Kaggle](https://www.kaggle.com/c/home-credit-default-risk)
-- **Total Records:** 307,511 loan applications
-- **Target:** Binary — `1` = Default, `0` = Repaid
-- **Class Imbalance:** ~8.07% positive class
-- **Features Used:** 10 engineered features (EXT_SOURCE_1/2/3, AMT_CREDIT, AMT_INCOME_TOTAL, AMT_ANNUITY, DAYS_BIRTH, DAYS_EMPLOYED, CREDIT_INCOME_RATIO, ANNUITY_INCOME_RATIO)
+| Home | Overview |
+|------|----------|
+| ![Home](screenshots/home.png) | ![Overview](screenshots/overview.png) |
 
----
+| Risk Analysis | Loan Predictor |
+|---------------|----------------|
+| ![Risk Analysis](screenshots/risk_analysis.png) | ![Loan Predictor](screenshots/loan_predictor.png) |
 
-## 🔍 XGBoost — Top Features
-
-| Feature | Importance |
-|---------|-----------|
-| EXT_SOURCE_3 | 0.280 |
-| EXT_SOURCE_2 | 0.220 |
-| EXT_SOURCE_1 | 0.180 |
-| CREDIT_INCOME_RATIO | 0.100 |
-| AMT_CREDIT | 0.070 |
+| SQL Explorer | Model Report |
+|--------------|--------------|
+| ![SQL Explorer](screenshots/sql_explorer.png) | ![Model Report](screenshots/model_report.png) |
 
 ---
 
@@ -155,32 +164,21 @@ cd app
 streamlit run app.py
 ```
 
-App opens at `http://localhost:8501`
+**Or visit the live demo directly**
 
----
-
-## 📦 Requirements
-
-```
-streamlit
-pandas
-numpy
-plotly
-scikit-learn
-xgboost
-```
+[![Streamlit App](https://img.shields.io/badge/Live%20Demo-Click%20Here-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://loansight-ai.streamlit.app)
 
 ---
 
 ## 👤 Author
 
-**Shubham Jaiswal**
-- 💼 Data Science & ML Enthusiast
-- 🔗 [LinkedIn](https://linkedin.com/in/shubhjais04)
-- 🐙 [GitHub](https://github.com/shubhamjais04)
+**Shubham Jaiswal**  
+*Data engineer & ML developer | Combining SQL and machine learning to power smarter credit decisions*
 
 ---
 
-## 📄 License
+## 📬 Connect
 
-This project is licensed under the MIT License.
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-shubhamjais04-0077B5?style=flat&logo=linkedin)](https://www.linkedin.com/in/shubhjais04)
+[![Gmail](https://img.shields.io/badge/Gmail-shubhjais.in@gmail.com-D14836?style=flat&logo=gmail)](mailto:shubhjais.in@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-shubhamjais04-181717?style=flat&logo=github)](https://github.com/shubhamjais04)
