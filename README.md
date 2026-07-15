@@ -101,6 +101,9 @@ BankLoan/
 │   ├── 03_Model_Training.ipynb
 │   ├── 04_SQL_Analytics.ipynb
 │   └── 05_Model_Evaluation.ipynb
+├── power_bi/
+│   ├── dashboard_preview_loansight
+│   ├── loansight_dashboard
 ├── screenshots/                 # App screenshots
 ├── .gitignore
 ├── README.md
