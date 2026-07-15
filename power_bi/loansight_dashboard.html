@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LoanSight AI Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial, sans-serif; }
+  body { background:#eef1f7; }
+  .wrap { width:1600px; height:960px; background:#eef1f7; padding:22px 28px; color:#1e293b; }
+
+  .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+  .brand { display:flex; align-items:center; gap:12px; }
+  .logo { width:46px; height:46px; border-radius:12px; background:linear-gradient(135deg,#1e3a5f,#2563eb); display:flex; align-items:center; justify-content:center; font-size:22px; }
+  .brand h1 { font-size:26px; font-weight:700; color:#0f2942; }
+  .brand p { font-size:14px; color:#64748b; margin-top:2px; }
+  .meta { text-align:right; font-size:13px; color:#64748b; line-height:1.6; }
+  .meta b { color:#2563eb; }
+
+  .kpis { display:flex; gap:14px; margin-bottom:16px; }
+  .kpi { flex:1; background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:16px 18px; box-shadow:0 1px 3px rgba(15,41,66,0.06); }
+  .kpi .lbl { font-size:13px; color:#64748b; display:flex; align-items:center; gap:6px; }
+  .kpi .val { font-size:26px; font-weight:700; color:#0f2942; margin-top:8px; }
+  .kpi .delta { font-size:13px; margin-top:6px; }
+  .up { color:#16a34a; } .down { color:#dc2626; } .neutral { color:#d97706; }
+
+  .grid { display:grid; grid-template-columns: 1.3fr 1fr 1fr; gap:14px; margin-bottom:14px; }
+  .card { background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:16px 18px; box-shadow:0 1px 3px rgba(15,41,66,0.06); }
+  .card h3 { font-size:16px; color:#0f2942; margin-bottom:12px; display:flex; align-items:center; gap:6px; }
+  .card h3 span.tag { font-size:12px; background:#eef1f7; color:#64748b; padding:2px 8px; border-radius:6px; margin-left:auto; }
+  .chart-box { position:relative; height:190px; }
+
+  .bottom { display:grid; grid-template-columns: 1.4fr 1fr; gap:14px; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th { text-align:left; color:#64748b; font-weight:600; padding:8px; border-bottom:1px solid #e2e8f0; }
+  td { padding:9px 8px; border-bottom:1px solid #f1f5f9; color:#1e293b; }
+  .badge { padding:3px 10px; border-radius:20px; font-size:13px; font-weight:600; }
+  .badge.gold { background:#fef3c7; color:#b45309; }
+  .badge.ok { background:#dcfce7; color:#16a34a; }
+
+  .sqlbox { background:#0f2942; color:#93c5fd; font-family:'Consolas', monospace; font-size:13px; padding:14px; border-radius:10px; line-height:1.6; white-space:pre; }
+  .result { margin-top:10px; background:#dcfce7; color:#166534; padding:8px 12px; border-radius:8px; font-size:13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="brand">
+      <div class="logo">🏦</div>
+      <div>
+        <h1>LoanSight AI</h1>
+        <p>Bank Loan Default Risk Analytics Platform — Executive Dashboard</p>
+      </div>
+    </div>
+    <div class="meta">
+      Dataset: <b>Home Credit Default Risk (Kaggle)</b><br>
+      307,511 loan applications · 10 engineered features
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="lbl">📄 Total Applications</div><div class="val">307,511</div><div class="delta neutral">Home Credit dataset</div></div>
+    <div class="kpi"><div class="lbl">⚠️ Default Rate</div><div class="val">8.07%</div><div class="delta down">Class imbalance</div></div>
+    <div class="kpi"><div class="lbl">🎯 Model Accuracy</div><div class="val">91.50%</div><div class="delta up">XGBoost — best model</div></div>
+    <div class="kpi"><div class="lbl">📈 ROC-AUC Score</div><div class="val">0.7222</div><div class="delta up">Top among 4 models</div></div>
+    <div class="kpi"><div class="lbl">💰 Avg Credit Amount</div><div class="val">₹3.20L</div><div class="delta neutral">Filtered portfolio</div></div>
+    <div class="kpi"><div class="lbl">🔍 High Risk Applicants</div><div class="val">44.9%</div><div class="delta down">Flagged for review</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>🏆 Model Comparison <span class="tag">Accuracy vs ROC-AUC</span></h3>
+      <div class="chart-box"><canvas id="modelComp"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>📊 Risk Level Breakdown</h3>
+      <div class="chart-box"><canvas id="riskLevel"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>🎯 Target Distribution</h3>
+      <div class="chart-box"><canvas id="targetDist"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>💳 Default Rate by Contract Type <span class="tag">SQL query</span></h3>
+      <div class="chart-box"><canvas id="contractType"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>🔑 Top Feature Importance <span class="tag">XGBoost</span></h3>
+      <div class="chart-box"><canvas id="featImp"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>🌡️ Default Rate: Income × Education <span class="tag">%</span></h3>
+      <div class="chart-box"><canvas id="heatBar"></canvas></div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="card">
+      <h3>📝 Model Performance Report</h3>
+      <table>
+        <tr><th>Model</th><th>Accuracy</th><th>ROC-AUC</th><th>Precision</th><th>Recall</th><th>Status</th></tr>
+        <tr><td>XGBoost</td><td>91.50%</td><td>0.7222</td><td>0.63</td><td>0.58</td><td><span class="badge gold">🥇 Best</span></td></tr>
+        <tr><td>Random Forest</td><td>91.14%</td><td>0.6678</td><td>0.60</td><td>0.53</td><td><span class="badge ok">2nd</span></td></tr>
+        <tr><td>Logistic Regression</td><td>79.72%</td><td>0.6399</td><td>0.55</td><td>0.48</td><td><span class="badge ok">3rd</span></td></tr>
+        <tr><td>Decision Tree</td><td>76.02%</td><td>0.6396</td><td>0.52</td><td>0.45</td><td><span class="badge ok">4th</span></td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>🗄️ SQL Explorer <span class="tag">SQLite</span></h3>
+      <div class="sqlbox">SELECT NAME_CONTRACT_TYPE,
+    COUNT(*) AS total,
+    SUM(TARGET) AS defaults,
+    ROUND(AVG(TARGET)*100,2) AS default_rate_pct
+FROM loans
+GROUP BY NAME_CONTRACT_TYPE</div>
+      <div class="result">✔ Query returned 2 rows — Cash loans: 7.98% · Revolving loans: 7.42%</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+Chart.defaults.color = '#64748b';
+Chart.defaults.font.size = 12;
+const grid = { color:'#f1f5f9' };
+
+new Chart(document.getElementById('modelComp'), {
+  type:'bar',
+  data:{ labels:['XGBoost','Random Forest','Logistic Regression','Decision Tree'],
+    datasets:[
+      { label:'Accuracy %', data:[91.50,91.14,79.72,76.02], backgroundColor:'#0f2942', borderRadius:4 },
+      { label:'ROC-AUC x100', data:[72.22,66.78,63.99,63.96], backgroundColor:'#2563eb', borderRadius:4 }
+    ]},
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top', labels:{boxWidth:10}}}, scales:{ x:{grid:{display:false}}, y:{grid:grid} } }
+});
+
+new Chart(document.getElementById('riskLevel'), {
+  type:'doughnut',
+  data:{ labels:['Medium','High','Low'],
+    datasets:[{ data:[51.2,44.9,3.9], backgroundColor:['#f59e0b','#dc2626','#16a34a'], borderWidth:0 }]},
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'right', labels:{boxWidth:10,padding:6}}} }
+});
+
+new Chart(document.getElementById('targetDist'), {
+  type:'doughnut',
+  data:{ labels:['No Default','Default'],
+    datasets:[{ data:[92.08,7.92], backgroundColor:['#2563eb','#dc2626'], borderWidth:0 }]},
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'right', labels:{boxWidth:10}}} }
+});
+
+new Chart(document.getElementById('contractType'), {
+  type:'bar',
+  data:{ labels:['Cash Loans','Revolving Loans'],
+    datasets:[{ data:[7.98,7.42], backgroundColor:['#0f2942','#2563eb'], borderRadius:6 }]},
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{grid:{display:false}}, y:{grid:grid, ticks:{callback:v=>v+'%'}} } }
+});
+
+new Chart(document.getElementById('featImp'), {
+  type:'bar',
+  data:{ labels:['EXT_SOURCE_3','EXT_SOURCE_2','EXT_SOURCE_1','AMT_CREDIT','DAYS_EMPLOYED'],
+    datasets:[{ data:[0.280,0.210,0.165,0.098,0.082], backgroundColor:'#2563eb', borderRadius:4 }]},
+  options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{grid:grid}, y:{grid:{display:false}} } }
+});
+
+new Chart(document.getElementById('heatBar'), {
+  type:'bar',
+  data:{ labels:['Commercial Assoc.','Pensioner','State Servant','Unemployed'],
+    datasets:[{ label:'Higher Education', data:[3.1,5.5,10.9,0.0], backgroundColor:'#16a34a', borderRadius:4 },
+               { label:'Secondary', data:[7.1,6.9,0.0,0.0], backgroundColor:'#f59e0b', borderRadius:4 }]},
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top', labels:{boxWidth:10}}}, scales:{ x:{grid:{display:false}}, y:{grid:grid, ticks:{callback:v=>v+'%'}} } }
+});
+</script>
+</body>
+</html>
